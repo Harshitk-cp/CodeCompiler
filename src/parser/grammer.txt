@@ -1,0 +1,7 @@
+program     -> statement*
+statement   -> print_statement | assignment
+print_statement -> PRINT expression ';'
+assignment  -> LET IDENTIFIER '=' expression ';'
+expression  -> term ( ('+' | '-') term )*
+term        -> factor ( ('*' | '/') factor )*
+factor      -> INTEGER | IDENTIFIER | '(' expression ')'
