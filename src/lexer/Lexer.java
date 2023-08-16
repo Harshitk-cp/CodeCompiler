@@ -8,17 +8,17 @@ public class Lexer {
     private final String input;
     private int index = 0;
     private List<Token> tokens = new ArrayList<>();
-    private List<TokenInfo> tokenInfos;
 
-    public Lexer(String input, List<TokenInfo> tokenInfos) {
+    public Lexer(String input) {
         this.input = input;
-        this.tokenInfos = tokenInfos;
     }
 
     public List<Token> tokenize() {
 
         while (index < input.length()) {
+
             boolean match = false;
+            List<TokenInfo> tokenInfos = TokenDefinitions.getTokenDefinitions();
 
             for (TokenInfo tokenInfo : tokenInfos) {
                 Matcher matcher = tokenInfo.getPattern().matcher(input.substring(index));

@@ -10,6 +10,7 @@ public class TokenDefinitions {
         tokenInfos.add(new TokenInfo(TokenPatterns.LET, TokenType.LET, false));
         tokenInfos.add(new TokenInfo(TokenPatterns.SHOW, TokenType.SHOW, false));
         tokenInfos.add(new TokenInfo(TokenPatterns.NUMBER, TokenType.NUMBER, false));
+        tokenInfos.add(new TokenInfo(TokenPatterns.STRING, TokenType.STRING, false));
         tokenInfos.add(new TokenInfo(TokenPatterns.IDENTIFIER, TokenType.IDENTIFIER, false));
         tokenInfos.add(new TokenInfo(TokenPatterns.ADD, TokenType.ADD, false));
         tokenInfos.add(new TokenInfo(TokenPatterns.SUBTRACT, TokenType.SUBTRACT, false));
