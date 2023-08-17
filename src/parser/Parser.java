@@ -3,6 +3,7 @@ package parser;
 import java.util.ArrayList;
 import java.util.List;
 
+import error.ParseException;
 import lexer.Token;
 import lexer.TokenType;
 import parser.nodes.AssignmentNode;
@@ -13,16 +14,20 @@ import parser.nodes.NumberLiteralNode;
 import parser.nodes.ProgramNode;
 import parser.nodes.ShowStatementNode;
 import parser.nodes.StringLiteralNode;
+import semantic.SymbolTable;
+import semantic.symbol.Symbol;
 
 public class Parser {
 
+    private SymbolTable symbolTable;
     private final List<Token> tokens;
     private int curTokenIndex;
     // private List<String> grammerRules;
 
-    public Parser(List<Token> tokens) {
+    public Parser(List<Token> tokens, SymbolTable symbolTable) {
         this.tokens = tokens;
         this.curTokenIndex = 0;
+        this.symbolTable = symbolTable;
         // this.grammerRules = readGrammerFromFile("grammer.txt");
     }
 
@@ -57,11 +62,17 @@ public class Parser {
     }
 
     private AstNode parseLetStatement() {
+        symbolTable.printSymbolTable();
         consumeToken(TokenType.LET);
         String identifier = consumeToken(TokenType.IDENTIFIER).getLexeme();
         consumeToken(TokenType.ASSIGN);
         AstNode expression = parseExpression();
         consumeToken(TokenType.ENDLINE);
+
+        Symbol symbol = new Symbol(identifier, getTypeFromExpression(expression));
+        symbolTable.enterScope();
+        symbolTable.inset(symbol);
+        // symbolTable.exitScope();
         return new AssignmentNode(identifier, expression);
     }
 
@@ -113,6 +124,22 @@ public class Parser {
         }
     }
 
+    private String getTypeFromExpression(AstNode expression) {
+        if (expression instanceof BinaryOperationNode) {
+            BinaryOperationNode binaryOpNode = (BinaryOperationNode) expression;
+            TokenType operator = binaryOpNode.getOperator();
+            if (operator == TokenType.ADD || operator == TokenType.SUBTRACT ||
+                    operator == TokenType.MULTIPLY || operator == TokenType.DIVIDE) {
+                return "NUMBER";
+            }
+        } else if (expression instanceof NumberLiteralNode) {
+            return "NUMBER";
+        } else if (expression instanceof StringLiteralNode) {
+            return "STRING";
+        }
+        return "UNKNOWN"; // Default type if not able to determine
+    }
+
     private boolean currentTokenIs(TokenType expectedType) {
 
         return getCurrentToken().getType() == expectedType;
@@ -137,16 +164,6 @@ public class Parser {
             curTokenIndex++;
         } else {
             throw new ParseException("Reached end of input");
-        }
-    }
-
-    public class ParseException extends RuntimeException {
-        public ParseException(String message) {
-            super(message);
-        }
-
-        public ParseException(String message, Throwable cause) {
-            super(message, cause);
         }
     }
 

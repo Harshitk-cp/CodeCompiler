@@ -1,5 +1,8 @@
 package parser.nodes;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AssignmentNode extends AstNode {
 
     private String identifier;
@@ -23,6 +26,13 @@ public class AssignmentNode extends AstNode {
     @Override
     public void accept(AstVisitor visitor) {
         visitor.visitAssignmentNode(this);
+    }
+
+    @Override
+    public List<AstNode> getChildren() {
+        List<AstNode> children = new ArrayList<>();
+        children.add(expression);
+        return children;
     }
 
     @Override

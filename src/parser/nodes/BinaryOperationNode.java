@@ -1,5 +1,8 @@
 package parser.nodes;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import lexer.TokenType;
 
 public class BinaryOperationNode extends AstNode {
@@ -30,6 +33,14 @@ public class BinaryOperationNode extends AstNode {
     @Override
     public void accept(AstVisitor visitor) {
         visitor.visitBinaryOperationNode(this);
+    }
+
+    @Override
+    public List<AstNode> getChildren() {
+        List<AstNode> children = new ArrayList<>();
+        children.add(leftOperand);
+        children.add(rightOperand);
+        return children;
     }
 
     @Override
