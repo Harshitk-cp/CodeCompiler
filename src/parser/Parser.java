@@ -32,6 +32,7 @@ public class Parser {
     }
 
     public AstNode parse() {
+        symbolTable.enterScope();
         return pasreProgram();
     }
 
@@ -51,6 +52,8 @@ public class Parser {
                 throw new ParseException("Expected show or let statement");
             }
         }
+        symbolTable.printSymbolTable();
+
         return statements;
     }
 
@@ -62,7 +65,6 @@ public class Parser {
     }
 
     private AstNode parseLetStatement() {
-        symbolTable.printSymbolTable();
         consumeToken(TokenType.LET);
         String identifier = consumeToken(TokenType.IDENTIFIER).getLexeme();
         consumeToken(TokenType.ASSIGN);
@@ -70,7 +72,6 @@ public class Parser {
         consumeToken(TokenType.ENDLINE);
 
         Symbol symbol = new Symbol(identifier, getTypeFromExpression(expression));
-        symbolTable.enterScope();
         symbolTable.inset(symbol);
         // symbolTable.exitScope();
         return new AssignmentNode(identifier, expression);

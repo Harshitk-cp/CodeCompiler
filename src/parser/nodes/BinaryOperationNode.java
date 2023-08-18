@@ -31,9 +31,20 @@ public class BinaryOperationNode extends AstNode {
     }
 
     public AstNode foldConstants() {
-        if (leftOperand instanceof NumberLiteralNode && rightOperand instanceof NumberLiteralNode) {
-            int leftValue = ((NumberLiteralNode) leftOperand).getValue();
-            int rightValue = ((NumberLiteralNode) rightOperand).getValue();
+        AstNode newLeftOperand = leftOperand;
+        AstNode newRightOperand = rightOperand;
+
+        if (leftOperand instanceof BinaryOperationNode) {
+            newLeftOperand = ((BinaryOperationNode) leftOperand).foldConstants();
+        }
+
+        if (rightOperand instanceof BinaryOperationNode) {
+            newRightOperand = ((BinaryOperationNode) rightOperand).foldConstants();
+        }
+
+        if (newLeftOperand instanceof NumberLiteralNode && newRightOperand instanceof NumberLiteralNode) {
+            int leftValue = ((NumberLiteralNode) newLeftOperand).getValue();
+            int rightValue = ((NumberLiteralNode) newRightOperand).getValue();
 
             switch (operator) {
                 case ADD:
@@ -49,11 +60,11 @@ public class BinaryOperationNode extends AstNode {
                         throw new ArithmeticException("Division by zero");
                     }
                 default:
-                    return this;
+                    return new BinaryOperationNode(operator, newLeftOperand, newRightOperand);
             }
         }
 
-        return this;
+        return new BinaryOperationNode(operator, newLeftOperand, newRightOperand);
     }
 
     @Override

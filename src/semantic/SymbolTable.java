@@ -3,6 +3,8 @@ package semantic;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
+
+import error.SemanticException;
 import semantic.symbol.Symbol;
 
 class Scope {
@@ -17,11 +19,11 @@ public class SymbolTable {
         scopeStack.push(new Scope());
     }
 
-    // public void exitScope() {
-    // if (!scopeStack.isEmpty()) {
-    // scopeStack.pop();
-    // }
-    // }
+    public void exitScope() {
+        if (!scopeStack.isEmpty()) {
+            scopeStack.pop();
+        }
+    }
 
     public void printSymbolTable() {
         for (Scope scope : scopeStack) {
@@ -37,7 +39,9 @@ public class SymbolTable {
 
     public void inset(Symbol symbol) {
         if (!scopeStack.isEmpty()) {
-
+            if (isVariableDeclaredInCurrentScope(symbol.getName())) {
+                throw new SemanticException("Variable already declared in current scope: " + symbol.getName());
+            }
             scopeStack.peek().symbols.put(symbol.getName(), symbol);
         }
     }
@@ -50,6 +54,14 @@ public class SymbolTable {
             }
         }
         return null;
+    }
+
+    public boolean isVariableDeclaredInCurrentScope(String name) {
+        for (Scope scope : scopeStack) {
+            System.out.println(name);
+            return scope.symbols.containsKey(name);
+        }
+        return false;
     }
 
 }

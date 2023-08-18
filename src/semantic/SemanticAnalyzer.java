@@ -57,7 +57,6 @@ public class SemanticAnalyzer {
 
             symbolTable.enterScope();
             Symbol symbolInfo = symbolTable.lookup(((IdentifierNode) node).getName());
-            System.out.println(symbolTable.lookup(((IdentifierNode) node).getName()).getType());
 
             return symbolInfo != null && isNumericType(symbolInfo.getType());
         } else if (node instanceof BinaryOperationNode) {
