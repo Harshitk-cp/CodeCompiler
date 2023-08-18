@@ -7,19 +7,19 @@ import lexer.TokenType;
 
 public class BinaryOperationNode extends AstNode {
 
-    private TokenType operater;
+    private TokenType operator;
     private AstNode leftOperand;
     private AstNode rightOperand;
 
-    public BinaryOperationNode(TokenType operater, AstNode leftOperand, AstNode rightOperand) {
-        this.operater = operater;
+    public BinaryOperationNode(TokenType operator, AstNode leftOperand, AstNode rightOperand) {
+        this.operator = operator;
         this.leftOperand = leftOperand;
         this.rightOperand = rightOperand;
 
     }
 
     public TokenType getOperator() {
-        return operater;
+        return operator;
     }
 
     public AstNode getLeftOperand() {
@@ -28,6 +28,32 @@ public class BinaryOperationNode extends AstNode {
 
     public AstNode getRightOperand() {
         return rightOperand;
+    }
+
+    public AstNode foldConstants() {
+        if (leftOperand instanceof NumberLiteralNode && rightOperand instanceof NumberLiteralNode) {
+            int leftValue = ((NumberLiteralNode) leftOperand).getValue();
+            int rightValue = ((NumberLiteralNode) rightOperand).getValue();
+
+            switch (operator) {
+                case ADD:
+                    return new NumberLiteralNode(leftValue + rightValue);
+                case SUBTRACT:
+                    return new NumberLiteralNode(leftValue - rightValue);
+                case MULTIPLY:
+                    return new NumberLiteralNode(leftValue * rightValue);
+                case DIVIDE:
+                    if (rightValue != 0) {
+                        return new NumberLiteralNode(leftValue / rightValue);
+                    } else {
+                        throw new ArithmeticException("Division by zero");
+                    }
+                default:
+                    return this;
+            }
+        }
+
+        return this;
     }
 
     @Override
@@ -45,7 +71,7 @@ public class BinaryOperationNode extends AstNode {
 
     @Override
     public String toString() {
-        return leftOperand + " " + operater + " " + rightOperand;
+        return leftOperand + " " + operator + " " + rightOperand;
     }
 
 }

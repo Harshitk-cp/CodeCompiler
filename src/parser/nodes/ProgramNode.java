@@ -16,7 +16,7 @@ public class ProgramNode extends AstNode {
 
     @Override
     public List<AstNode> getChildren() {
-        return statements; // Return the list of statements as children
+        return statements;
     }
 
     @Override
