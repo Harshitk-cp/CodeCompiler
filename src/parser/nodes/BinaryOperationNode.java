@@ -42,16 +42,12 @@ public class BinaryOperationNode extends AstNode {
             newRightOperand = ((BinaryOperationNode) rightOperand).foldConstants();
         }
 
-        boolean isLeftDecimal = (newLeftOperand instanceof NumberLiteralNode)
-                && ((NumberLiteralNode) newLeftOperand).isDecimal();
-        boolean isRightDecimal = (newRightOperand instanceof NumberLiteralNode)
-                && ((NumberLiteralNode) newRightOperand).isDecimal();
+        TokenType leftOperandType = determineOperandType(newLeftOperand);
+        TokenType rightOperandType = determineOperandType(newRightOperand);
 
-        if (isLeftDecimal || isRightDecimal) {
-            double leftValue = isLeftDecimal ? ((NumberLiteralNode) newLeftOperand).getDoubleValue()
-                    : ((NumberLiteralNode) newLeftOperand).getIntValue();
-            double rightValue = isRightDecimal ? ((NumberLiteralNode) newRightOperand).getDoubleValue()
-                    : ((NumberLiteralNode) newRightOperand).getIntValue();
+        if (leftOperandType == TokenType.NUMBER && rightOperandType == TokenType.NUMBER) {
+            double leftValue = getValueFromOperand(newLeftOperand);
+            double rightValue = getValueFromOperand(newRightOperand);
 
             switch (operator) {
                 case ADD:
@@ -70,25 +66,24 @@ public class BinaryOperationNode extends AstNode {
                     return new BinaryOperationNode(operator, newLeftOperand, newRightOperand);
             }
         } else {
-            int leftValue = ((NumberLiteralNode) newLeftOperand).getIntValue();
-            int rightValue = ((NumberLiteralNode) newRightOperand).getIntValue();
+            return new BinaryOperationNode(operator, newLeftOperand, newRightOperand);
+        }
+    }
 
-            switch (operator) {
-                case ADD:
-                    return new NumberLiteralNode(leftValue + rightValue);
-                case SUBTRACT:
-                    return new NumberLiteralNode(leftValue - rightValue);
-                case MULTIPLY:
-                    return new NumberLiteralNode(leftValue * rightValue);
-                case DIVIDE:
-                    if (rightValue != 0) {
-                        return new NumberLiteralNode(leftValue / rightValue);
-                    } else {
-                        throw new ArithmeticException("Division by zero");
-                    }
-                default:
-                    return new BinaryOperationNode(operator, newLeftOperand, newRightOperand);
-            }
+    private TokenType determineOperandType(AstNode operand) {
+        if (operand instanceof NumberLiteralNode) {
+            return ((NumberLiteralNode) operand).isDecimal() ? TokenType.NUMBER : TokenType.NUMBER;
+        } else {
+            return TokenType.IDENTIFIER;
+        }
+    }
+
+    private double getValueFromOperand(AstNode operand) {
+        if (operand instanceof NumberLiteralNode) {
+            return ((NumberLiteralNode) operand).isDecimal() ? ((NumberLiteralNode) operand).getDoubleValue()
+                    : ((NumberLiteralNode) operand).getIntValue();
+        } else {
+            throw new IllegalStateException("Operand is not a number literal");
         }
     }
 

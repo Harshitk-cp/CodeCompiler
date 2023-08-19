@@ -32,7 +32,19 @@ public class IrToJava {
             BinaryOperationIrNode binaryNode = (BinaryOperationIrNode) irNode;
             String left = convertIrNodeToJava(binaryNode.getLeftOperand());
             String right = convertIrNodeToJava(binaryNode.getRightOperand());
-            return "(" + left + " " + binaryNode.getOperator() + " " + right + ")";
+
+            switch (binaryNode.getOperator()) {
+                case ADD:
+                    return left + " + " + right;
+                case SUBTRACT:
+                    return left + " - " + right;
+                case MULTIPLY:
+                    return left + " * " + right;
+                case DIVIDE:
+                    return left + " / " + right;
+                default:
+                    return "(" + left + " " + binaryNode.getOperator() + " " + right + ")";
+            }
         }
         if (irNode instanceof AssignmentIrNode) {
             AssignmentIrNode assignmentNode = (AssignmentIrNode) irNode;
