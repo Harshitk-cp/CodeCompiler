@@ -1,6 +1,7 @@
 package codegen;
 
 import java.util.List;
+import java.util.function.BinaryOperator;
 
 import codegen.irnodes.AssignmentIrNode;
 import codegen.irnodes.BinaryOperationIrNode;
@@ -10,6 +11,8 @@ import codegen.irnodes.NumberLiteralIrNode;
 import codegen.irnodes.ProgramIrNode;
 import codegen.irnodes.ShowStatementIrNode;
 import codegen.irnodes.StringLiteralIrNode;
+import error.SemanticException;
+import lexer.TokenType;
 
 public class IrToJava {
 
@@ -32,6 +35,17 @@ public class IrToJava {
             BinaryOperationIrNode binaryNode = (BinaryOperationIrNode) irNode;
             String left = convertIrNodeToJava(binaryNode.getLeftOperand());
             String right = convertIrNodeToJava(binaryNode.getRightOperand());
+
+            if (binaryNode.getOperator() == TokenType.ADD && left.contains("\"")
+                    && right.contains("\"")) {
+                return left + " + " + right;
+            } else if (left.contains("\"")
+                    && right.contains("\"") || binaryNode.getOperator() == TokenType.SUBTRACT
+                    || binaryNode.getOperator() == TokenType.MULTIPLY || binaryNode.getOperator() == TokenType.DIVIDE) {
+
+                return "\"Can not perform " + binaryNode.getOperator().toString() + " operation on String\"";
+
+            }
 
             switch (binaryNode.getOperator()) {
                 case ADD:

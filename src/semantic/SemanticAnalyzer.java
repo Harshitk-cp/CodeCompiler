@@ -44,10 +44,14 @@ public class SemanticAnalyzer {
         AstNode left = binaryOpNode.getLeftOperand();
         AstNode right = binaryOpNode.getRightOperand();
 
-        if (!isNumericExpression(left) || !isNumericExpression(right)) {
+        boolean isLeftNumeric = isNumericExpression(left);
+        boolean isRightNumeric = isNumericExpression(right);
+        boolean isLeftString = isStringExpression(left);
+        boolean isRightString = isStringExpression(right);
+
+        if (!((isLeftNumeric && isRightNumeric) || (isLeftString && isRightString))) {
             throw new SemanticException("Invalid operands for operator " + operator);
         }
-
     }
 
     private boolean isNumericExpression(AstNode node) {
@@ -67,8 +71,28 @@ public class SemanticAnalyzer {
         return false;
     }
 
+    private boolean isStringExpression(AstNode node) {
+        if (node instanceof StringLiteralNode) {
+            return true;
+        } else if (node instanceof IdentifierNode) {
+            symbolTable.enterScope();
+            Symbol symbolInfo = symbolTable.lookup(((IdentifierNode) node).getName());
+
+            return symbolInfo != null && isStringType(symbolInfo.getType());
+        } else if (node instanceof BinaryOperationNode) {
+            BinaryOperationNode binaryOpNode = (BinaryOperationNode) node;
+            return isStringExpression(binaryOpNode.getLeftOperand())
+                    && isStringExpression(binaryOpNode.getRightOperand());
+        }
+        return false;
+    }
+
     private boolean isNumericType(String string) {
         return string == TokenType.NUMBER.toString();
+    }
+
+    private boolean isStringType(String string) {
+        return string == TokenType.STRING.toString();
     }
 
 }

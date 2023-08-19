@@ -112,6 +112,9 @@ public class Parser {
                 int value = Integer.parseInt(valueStr);
                 return new NumberLiteralNode(value);
             }
+        } else if (currentTokenIs(TokenType.STRING)) {
+            String valueStr = consumeToken(TokenType.STRING).getLexeme();
+            return new StringLiteralNode(valueStr);
         } else if (currentTokenIs(TokenType.IDENTIFIER)) {
             String identifier = consumeToken(TokenType.IDENTIFIER).getLexeme();
             return new IdentifierNode(identifier);
