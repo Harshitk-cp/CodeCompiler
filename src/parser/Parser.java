@@ -104,11 +104,14 @@ public class Parser {
 
     private AstNode parseFactor() {
         if (currentTokenIs(TokenType.NUMBER)) {
-            int value = Integer.parseInt(consumeToken(TokenType.NUMBER).getLexeme());
-            return new NumberLiteralNode(value);
-        } else if (currentTokenIs(TokenType.STRING)) {
-            String string = consumeToken(TokenType.STRING).getLexeme();
-            return new StringLiteralNode(string);
+            String valueStr = consumeToken(TokenType.NUMBER).getLexeme();
+            if (valueStr.contains(".")) {
+                double value = Double.parseDouble(valueStr);
+                return new NumberLiteralNode(value);
+            } else {
+                int value = Integer.parseInt(valueStr);
+                return new NumberLiteralNode(value);
+            }
         } else if (currentTokenIs(TokenType.IDENTIFIER)) {
             String identifier = consumeToken(TokenType.IDENTIFIER).getLexeme();
             return new IdentifierNode(identifier);

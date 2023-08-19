@@ -4,14 +4,30 @@ import java.util.Collections;
 import java.util.List;
 
 public class NumberLiteralNode extends AstNode {
-    private int value;
+    private double doubleValue;
+    private int intValue;
+    private boolean isDecimal;
 
     public NumberLiteralNode(int value) {
-        this.value = value;
+        this.intValue = value;
+        this.isDecimal = false;
     }
 
-    public int getValue() {
-        return value;
+    public NumberLiteralNode(double value) {
+        this.doubleValue = value;
+        this.isDecimal = true;
+    }
+
+    public double getDoubleValue() {
+        return doubleValue;
+    }
+
+    public int getIntValue() {
+        return intValue;
+    }
+
+    public boolean isDecimal() {
+        return isDecimal;
     }
 
     @Override
@@ -26,6 +42,6 @@ public class NumberLiteralNode extends AstNode {
 
     @Override
     public String toString() {
-        return value + "";
+        return isDecimal ? doubleValue + "" : intValue + "";
     }
 }

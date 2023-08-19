@@ -31,7 +31,7 @@ public class IrPrinter implements IrVisitor {
     @Override
     public void visitNumberLiteralIrNode(NumberLiteralIrNode node) {
         System.out.println("(");
-        System.out.println(" " + node.getValue() + " ");
+        System.out.println(node.isDecimal() ? node.getDoubleValue() : node.getIntValue() + " ");
         System.out.println(")");
     }
 

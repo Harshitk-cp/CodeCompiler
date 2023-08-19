@@ -33,9 +33,9 @@ public class Main {
         // parse to token
         Parser parse = new Parser(tokens, symbolTable);
 
-        // for (Token token : tokens) {
-        // System.out.println(token);
-        // }
+        for (Token token : tokens) {
+            System.out.println(token);
+        }
 
         // syntactical check
         AstNode rootNode = parse.parse();

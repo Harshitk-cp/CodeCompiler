@@ -38,8 +38,12 @@ public class IrGenerator {
             AstNode foldedNode = binaryOperationNode.foldConstants();
 
             if (foldedNode instanceof NumberLiteralNode) {
-                int constantValue = ((NumberLiteralNode) foldedNode).getValue();
-                return new NumberLiteralIrNode(constantValue);
+                NumberLiteralNode numberLiteralNode = (NumberLiteralNode) foldedNode;
+                if (numberLiteralNode.isDecimal()) {
+                    return new NumberLiteralIrNode(numberLiteralNode.getDoubleValue());
+                } else {
+                    return new NumberLiteralIrNode(numberLiteralNode.getIntValue());
+                }
             } else {
                 TokenType operator = binaryOperationNode.getOperator();
                 IrNode leftOperand = generateIr(binaryOperationNode.getLeftOperand());
@@ -56,8 +60,13 @@ public class IrGenerator {
         } else if (node instanceof NumberLiteralNode) {
 
             NumberLiteralNode numberLiteralNode = (NumberLiteralNode) node;
-            int value = numberLiteralNode.getValue();
-            return new NumberLiteralIrNode(value);
+            if (numberLiteralNode.isDecimal()) {
+                return new NumberLiteralIrNode(numberLiteralNode.getDoubleValue());
+
+            } else {
+                return new NumberLiteralIrNode(numberLiteralNode.getIntValue());
+
+            }
 
         } else if (node instanceof ProgramNode) {
 

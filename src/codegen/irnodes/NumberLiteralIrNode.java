@@ -5,14 +5,30 @@ import java.util.List;
 
 public class NumberLiteralIrNode extends IrNode {
 
-    private int value;
+    private int intValue;
+    private double doubleValue;
+    private boolean isDecimal;
 
     public NumberLiteralIrNode(int value) {
-        this.value = value;
+        this.intValue = value;
+        this.isDecimal = false;
     }
 
-    public int getValue() {
-        return value;
+    public NumberLiteralIrNode(double value) {
+        this.doubleValue = value;
+        this.isDecimal = true;
+    }
+
+    public boolean isDecimal() {
+        return isDecimal;
+    }
+
+    public double getDoubleValue() {
+        return doubleValue;
+    }
+
+    public int getIntValue() {
+        return intValue;
     }
 
     @Override
@@ -27,7 +43,7 @@ public class NumberLiteralIrNode extends IrNode {
 
     @Override
     public String toString() {
-        return value + "";
+        return isDecimal ? doubleValue + "" : intValue + "";
     }
 
 }

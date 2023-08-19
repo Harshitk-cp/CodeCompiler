@@ -75,7 +75,7 @@ public class AstPrinter implements AstVisitor {
         increaseIndentation();
 
         printIndentation();
-        System.out.println(node.getValue());
+        System.out.println(node.isDecimal() ? node.getDoubleValue() : node.getIntValue());
 
         decreaseIndentation();
         printIndentation();

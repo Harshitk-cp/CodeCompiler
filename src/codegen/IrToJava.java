@@ -42,13 +42,25 @@ public class IrToJava {
             // Check if the expression is a String literal
             if (assignmentNode.getExpression() instanceof StringLiteralIrNode) {
                 return "String " + target + " = " + expression + ";";
-            } else {
-                return "int " + target + " = " + expression + ";";
+            } else if (assignmentNode.getExpression() instanceof NumberLiteralIrNode) {
+                NumberLiteralIrNode numberLiteralIrNode = (NumberLiteralIrNode) assignmentNode.getExpression();
+                if (numberLiteralIrNode.isDecimal()) {
+                    return "double " + target + " = " + expression + ";";
+                } else {
+                    return "int " + target + " = " + expression + ";";
+                }
+
             }
+            return "";
         } else if (irNode instanceof IdentifierIrNode) {
             return ((IdentifierIrNode) irNode).getName();
         } else if (irNode instanceof NumberLiteralIrNode) {
-            return Integer.toString(((NumberLiteralIrNode) irNode).getValue());
+            NumberLiteralIrNode numberNode = (NumberLiteralIrNode) irNode;
+            if (numberNode.isDecimal()) {
+                return Double.toString(numberNode.getDoubleValue());
+            } else {
+                return Integer.toString(numberNode.getIntValue());
+            }
         } else if (irNode instanceof StringLiteralIrNode) {
             return ((StringLiteralIrNode) irNode).getValue();
         } else if (irNode instanceof ShowStatementIrNode) {

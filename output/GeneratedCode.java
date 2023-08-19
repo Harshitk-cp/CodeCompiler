@@ -1,6 +1,6 @@
 public class GeneratedCode {
     public static void main(String[] args) {
-int b = 38;
+double b = 470.23;
 System.out.println(b);
     }
 }
