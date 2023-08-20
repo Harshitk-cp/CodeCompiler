@@ -4,6 +4,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
+import bridge.CustomIRBridge;
 import codegen.IrGenerator;
 import codegen.IrToJava;
 import codegen.irnodes.IrNode;
@@ -55,28 +56,37 @@ public class Main {
             IrVisitor irPrinter = new IrPrinter();
             irRootNode.accept(irPrinter);
 
-            String javaCode = IrToJava.convertIrToJava(irRootNode);
+            byte[] serializedTree = serializeBinaryTree(irRootNode);
+            CustomIRBridge.sendIRNode(serializedTree);
 
-            try (FileWriter writer = new FileWriter("output/GeneratedCode.java")) {
-                writer.write(javaCode.toString());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            // Runnning output script
-            ProcessBuilder processBuilder = new ProcessBuilder("./src/script/run_generated_code.sh");
-            processBuilder.redirectErrorStream(true);
-            try {
-                Process process = processBuilder.start();
-                int exitCode = process.waitFor();
-                System.out.println("Process exited with code: " + exitCode);
-            } catch (IOException | InterruptedException e) {
-                e.printStackTrace();
-            }
+            // String javaCode = IrToJava.convertIrToJava(irRootNode);
+
+            // try (FileWriter writer = new FileWriter("output/GeneratedCode.java")) {
+            // writer.write(javaCode.toString());
+            // } catch (IOException e) {
+            // e.printStackTrace();
+            // }
+            // // Runnning output script
+            // ProcessBuilder processBuilder = new
+            // ProcessBuilder("./src/script/run_generated_code.sh");
+            // processBuilder.redirectErrorStream(true);
+            // try {
+            // Process process = processBuilder.start();
+            // int exitCode = process.waitFor();
+            // System.out.println("Process exited with code: " + exitCode);
+            // } catch (IOException | InterruptedException e) {
+            // e.printStackTrace();
+            // }
 
         } catch (SemanticException e) {
             System.err.println("Semantic error: " + e.getMessage());
         }
 
+    }
+
+    private static byte[] serializeBinaryTree(IrNode rootNode) {
+        return null;
+        // Serialize binary tree to byte array
     }
 
     private static String readInputFromFile(String filePath) {
