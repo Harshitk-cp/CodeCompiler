@@ -1,0 +1,11 @@
+/.vscode
+/bin
+/Compiler.xcodeproj
+/Compiler/.vscode
+/Compiler/main.ll
+/Compiler/my_program
+/Compiler/output.o
+/include
+/lib
+/share
+

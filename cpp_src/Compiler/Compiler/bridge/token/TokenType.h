@@ -1,0 +1,15 @@
+#ifndef TokenType_h
+#define TokenType_h
+
+enum  TokenType {
+        // identifiers
+        NUMBER, STRING, IDENTIFIER, WHITESPACE, ENDLINE,
+
+        // keywords
+        LET, SHOW,
+
+        // operaters
+        ADD, SUBTRACT, MULTIPLY, DIVIDE, ASSIGN, UNKNOWN_TOKEN_TYPE
+};
+
+#endif
