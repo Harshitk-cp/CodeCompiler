@@ -9,6 +9,6 @@ public enum TokenType {
     LET, SHOW,
 
     // operaters
-    ADD, SUBTRACT, MULTIPLY, DIVIDE, ASSIGN
+    ADD, SUBTRACT, MULTIPLY, DIVIDE, ASSIGN, UNKNOWN_TOKEN_TYPE
 
 }

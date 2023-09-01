@@ -1,12 +1,10 @@
 package bridge;
 
-import codegen.irnodes.IrNode;
-
 public class CustomIRBridge {
     static {
-        System.loadLibrary("JavaBridge");
+        System.loadLibrary("NodeBridge");
     }
 
-    public static native void sendIRNode(byte[] serializedTree);
+    public static native void processBinaryTree(Object[] objects);
 
 }

@@ -1,0 +1,8 @@
+*.class
+/.vscode
+cpp_src/Compiler/.vscode
+/Compiler.xcodeproj
+/include
+/lib
+/share
+
