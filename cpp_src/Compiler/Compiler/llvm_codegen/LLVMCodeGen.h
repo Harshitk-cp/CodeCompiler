@@ -18,7 +18,7 @@ private:
     void moduleInit() {
         ctx = std::make_unique<LLVMContext>();
         module = std::make_unique<Module>("Main Module", *ctx);
-        module->setTargetTriple("arm64-apple-macosx14.0.0");
+        module->setTargetTriple("set_target_architecture_here");
         builder = std::make_unique<IRBuilder<>>(*ctx);
     }
 

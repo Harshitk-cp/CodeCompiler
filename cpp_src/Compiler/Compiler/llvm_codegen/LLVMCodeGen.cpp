@@ -11,7 +11,7 @@ void LLVMCodeGenerator::compile(ASTNode* astNode){
     
     builder->CreateRet(builder->getInt32(0));
     
-    saveModuleToFile("/Users/kagelol/_development/Compiler/Compiler/main.ll");
+    saveModuleToFile("/path_to/CodeCompiler/cpp_src/Compiler/Compiler/main.ll");
 }
 
 Value* LLVMCodeGenerator::generateCode(ASTNode* astNode) {
