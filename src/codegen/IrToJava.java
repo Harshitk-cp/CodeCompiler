@@ -1,8 +1,6 @@
 package codegen;
 
 import java.util.List;
-import java.util.function.BinaryOperator;
-
 import codegen.irnodes.AssignmentIrNode;
 import codegen.irnodes.BinaryOperationIrNode;
 import codegen.irnodes.IdentifierIrNode;
@@ -11,7 +9,6 @@ import codegen.irnodes.NumberLiteralIrNode;
 import codegen.irnodes.ProgramIrNode;
 import codegen.irnodes.ShowStatementIrNode;
 import codegen.irnodes.StringLiteralIrNode;
-import error.SemanticException;
 import lexer.TokenType;
 
 public class IrToJava {
@@ -65,7 +62,6 @@ public class IrToJava {
             String target = assignmentNode.getIdentifier();
             String expression = convertIrNodeToJava(assignmentNode.getExpression());
 
-            // Check if the expression is a String literal
             if (assignmentNode.getExpression() instanceof StringLiteralIrNode) {
                 return "String " + target + " = " + expression + ";";
             } else if (assignmentNode.getExpression() instanceof NumberLiteralIrNode) {

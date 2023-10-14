@@ -1,0 +1,11 @@
+ g++ -shared -o libNodeBridge.dylib \
+Compiler/bridge/bridge/JavaBridge.cpp \
+Compiler/bridge/token/Token.cpp \
+Compiler/bridge/parser/ParseTokenToAst.cpp \
+Compiler/llvm_codegen/LLVMCodeGen.cpp \
+$(/Users/kagelol/_development/Compiler/bin/llvm-config --cxxflags) \
+$(/Users/kagelol/_development/Compiler/bin/llvm-config --ldflags) -frtti \
+-I/Library/Java/JavaVirtualMachines/temurin-17.jdk/Contents/Home/include \
+-I/Library/Java/JavaVirtualMachines/temurin-17.jdk/Contents/Home/include/darwin \
+-I/Users/kagelol/_development/Compiler/include -L/Users/kagelol/_development/llvm-project/build/lib \
+ -lLLVMCore -lLLVMSupport -lLLVMAArch64CodeGen -lLLVMCodeGen -lLLVMARMAsmParser -lLLVMAArch64AsmParser -lLLVMAArch64Desc -lLLVMAArch64Disassembler -lLLVMAArch64Info -lLLVMAArch64Utils -lLLVMARMCodeGen -lLLVMARMDesc -lLLVMARMDisassembler -lLLVMARMInfo -lLLVMARMUtils -lLLVMAggressiveInstCombine -lLLVMAnalysis -lLLVMAsmParser -lLLVMAsmPrinter -lLLVMBinaryFormat -lLLVMBitReader -lLLVMBitWriter -lLLVMMCA -lLLVMBitstreamReader -lLLVMCFGuard -lLLVMCFIVerify -lLLVMCodeGenTypes -lLLVMCoroutines -lLLVMCoverage -lLLVMDWARFLinker -lLLVMDWARFLinkerParallel -lLLVMDWP -lLLVMDebugInfoBTF -lLLVMDebugInfoCodeView -lLLVMDebugInfoDWARF -lLLVMDebugInfoGSYM -lLLVMDebugInfoLogicalView -lLLVMDebugInfoMSF -lLLVMDebugInfoPDB -lLLVMDebuginfod -lLLVMDemangle -lLLVMDiff -lLLVMDlltoolDriver -lLLVMExecutionEngine -lLLVMExegesis -lLLVMExegesisAArch64 -lLLVMExtensions -lLLVMFileCheck -lLLVMFrontendHLSL -lLLVMFrontendOpenACC -lLLVMFrontendOpenMP -lLLVMFuzzMutate -lLLVMFuzzerCLI -lLLVMGlobalISel -lLLVMIRPrinter -lLLVMIRReader -lLLVMInstCombine -lLLVMInstrumentation -lLLVMInterfaceStub -lLLVMInterpreter -lLLVMJITLink -lLLVMLTO -lLLVMLibDriver -lLLVMLineEditor -lLLVMLinker -lLLVMMCDisassembler -lLLVMMC -lLLVMMCJIT -lLLVMMCParser -lLLVMMIRParser -lLLVMObjCARCOpts -lLLVMObjCopy -lLLVMObject -lLLVMObjectYAML -lLLVMOption -lLLVMOrcJIT -lLLVMOrcShared -lLLVMOrcTargetProcess -lLLVMPasses -lLLVMProfileData -lLLVMRemarks -lLLVMRuntimeDyld -lLLVMScalarOpts -lLLVMSelectionDAG -lLLVMSymbolize -lLLVMTableGen -lLLVMTableGenCommon -lLLVMTableGenGlobalISel -lLLVMTarget -lLLVMTargetParser -lLLVMTextAPI -lLLVMTransformUtils -lLLVMVectorize -lLLVMWindowsDriver -lLLVMWindowsManifest -lLLVMXRay -lcurses -lLLVMipo
