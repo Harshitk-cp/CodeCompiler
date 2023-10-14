@@ -62,7 +62,7 @@ private:
             {Type::getInt64Ty(*ctx)},
             false
         );
-        
+
         strlenFunc = Function::Create(strlenFuncType, Function::ExternalLinkage, "strlen", *module);
         memcpyFunc = Function::Create(memcpyFuncType, Function::ExternalLinkage, "memcpy", *module);
         mallocFunc = Function::Create(mallocFuncType, Function::ExternalLinkage, "malloc", *module);
