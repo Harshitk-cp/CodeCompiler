@@ -2,7 +2,7 @@
 #include <string>
 #include <vector>
 #include "../token/TokenType.h"
-
+#include <iostream>
 class ASTNode {
 public:
     virtual ~ASTNode() {}
@@ -11,7 +11,6 @@ public:
         return std::vector<ASTNode*>();
     }
 
-    // Define a function to apply a function to each child
     void forEachChild(std::function<void(ASTNode*)> func) {
         std::vector<ASTNode*> children = getChildren();
         std::for_each(children.begin(), children.end(), func);
@@ -54,12 +53,17 @@ class NumberLiteralNode : public ASTNode {
 public:
     int intValue;
     double doubleValue;
+    bool isDouble = 0;
+    bool isInt = 0;
 
-    NumberLiteralNode(int value) : intValue(value), doubleValue(0) {}
-    NumberLiteralNode(double value) : intValue(0), doubleValue(value) {}
+    NumberLiteralNode(int value) : intValue(value), doubleValue(0), isInt(1) {}
+    NumberLiteralNode(double value) : intValue(0), doubleValue(value), isDouble(1) {}
 
     bool isDecimal() {
-        return (typeid(doubleValue).name() == typeid(double).name());
+        return isDouble;
+    }
+    bool isInteger() {
+        return isInt;
     }
 };
 

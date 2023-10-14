@@ -1,0 +1,3 @@
+/Users/kagelol/_development/Compiler/CMakeFiles/NodeBridge.dir
+/Users/kagelol/_development/Compiler/CMakeFiles/edit_cache.dir
+/Users/kagelol/_development/Compiler/CMakeFiles/rebuild_cache.dir

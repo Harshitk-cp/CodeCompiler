@@ -7,6 +7,9 @@
 #include "../parser/ParseTokenToAst.h"
 #include "../../llvm_codegen/LLVMCodeGen.h"
 extern "C" JNIEXPORT void JNICALL Java_bridge_CustomIRBridge_processBinaryTree(JNIEnv* env, jclass cls, jobjectArray javaStringArray) {
+    
+    const char* shellCommand = "/Users/kagelol/_development/Compiler/Compiler/scripts/compile.sh";
+    
 
     jsize arrayLength = env->GetArrayLength(javaStringArray);
     std::vector<Token> tokens;
@@ -57,8 +60,11 @@ extern "C" JNIEXPORT void JNICALL Java_bridge_CustomIRBridge_processBinaryTree(J
     
     LLVMCodeGenerator llvmCodeGen;
     
-    llvmCodeGen.generateCode(astNode);
+    llvmCodeGen.compile(astNode);
     
     llvmCodeGen.printIR();
+    
+    system(shellCommand);
+    
     
 }
