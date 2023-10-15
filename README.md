@@ -52,6 +52,12 @@ The supported language grammar allows you to create expressions and statements u
 
 ### If you simply wish to run the program to see output follow these simple steps
 
+> [!NOTE]
+> You must have an Apple Silicon chip Mac to run this.
+
+#### For other operating systems go to the Setup Project Section.
+
+
 - Clone the repository
 - Change the /input/input.txt
 - Open terminal in project's root directory and run following command and you should see the output along with all the intermediate representation like Lexing, AST Nodes and LLVM IR.
@@ -175,7 +181,7 @@ The supported language grammar allows you to create expressions and statements u
   224
   ```
 
-### If you want to experiment with the project follow these steps
+### Setup Project
 #### Prerequisites
 
 - Install LLVM: Download and install the latest version of LLVM onto your machine. You can get LLVM from the official website: [llvm.org](https://releases.llvm.org/download.html). Make sure to follow the installation instructions for your specific platform.
@@ -188,6 +194,13 @@ Clone this repository to your local machine.
 
 Setting Paths: 
 - After installing LLVM, locate the llvm-config executable on your system. Update the path to llvm-config in the ../cpp_src/Compiler/run.sh script. Open the script and replace the placeholder LLVM_CONFIG_PATH with the actual path to your llvm-config executable along with other paths mentioned as /path_to/.
+- In the same ../cpp_src/Compiler/run.sh file change below line to create your own shared library,
+
+  For example -> In windows you would name your shared file like this: *libNodeBridge.dll*
+  ```
+  g++ -shared -o libNodeBridge.dylib \
+  ```
+
 - set correct path in
   - cpp_src/Compiler/Compiler/scripts/compile.sh
   - cpp_src/Compiler/Compiler/bridge/bridge/JavaBridge.cpp
