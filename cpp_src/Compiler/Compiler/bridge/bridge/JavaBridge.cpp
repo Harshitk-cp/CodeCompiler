@@ -8,7 +8,7 @@
 #include "../../llvm_codegen/LLVMCodeGen.h"
 extern "C" JNIEXPORT void JNICALL Java_bridge_CustomIRBridge_processBinaryTree(JNIEnv* env, jclass cls, jobjectArray javaStringArray) {
     
-    const char* shellCommand = "/Users/kagelol/_development/Compiler/Compiler/scripts/compile.sh";
+    const char* shellCommand = "/path_to/CodeCompiler/cpp_src/Compiler/Compiler/scripts/compile.sh";
     
 
     jsize arrayLength = env->GetArrayLength(javaStringArray);

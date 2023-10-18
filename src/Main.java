@@ -42,7 +42,7 @@ public class Main {
         AstVisitor astPrinter = new AstPrinter();
         rootNode.accept(astPrinter);
 
-        // semanticl check
+        // semantical check
         try {
             semanticAnalyzer.analyze(rootNode);
             System.out.println("Semantic analysis completed successfully.");
@@ -54,7 +54,7 @@ public class Main {
             IrVisitor irPrinter = new IrPrinter();
             irRootNode.accept(irPrinter);
 
-            // System.out.println(tokens.toString());
+             System.out.println(tokens.toString());
             CustomIRBridge.processBinaryTree(IRToStringConverter.convertIrNodeToTokens(irRootNode).toArray());
 
         } catch (SemanticException e) {

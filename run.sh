@@ -1,0 +1,1 @@
+cd src/ && java -Djava.library.path=../cpp_src/Compiler -cp . Main
